@@ -32,4 +32,4 @@ def create_tables():
     conn.commit()
     cur.close()
     conn.close()
-    print("🐀 Таблицы успешно созданы.")
+    print("🐭Таблицы успешно созданы.")

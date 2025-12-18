@@ -2,6 +2,9 @@ from hh_vault.database.db import get_connection
 
 
 class DBManager:
+    """
+    Класс для выполнения SQL-запросов к базе данных с вакансиями.
+    """
 
     def __init__(self):
         self.conn = get_connection()
@@ -13,6 +16,7 @@ class DBManager:
 
     def get_companies_and_vacancies_count(self) -> list[tuple]:
         """Список всех компаний и количество вакансий у каждой."""
+
         self.cur.execute("""
             SELECT companies.name, COUNT(vacancies.id)
             FROM companies
@@ -23,6 +27,7 @@ class DBManager:
 
     def get_all_vacancies(self) -> list[tuple]:
         """Все вакансии: название компании, вакансия, зарплата, ссылка."""
+
         self.cur.execute("""
             SELECT companies.name, vacancies.title,
                    COALESCE(vacancies.salary_from, 0),
@@ -35,6 +40,7 @@ class DBManager:
 
     def get_avg_salary(self) -> float:
         """Средняя зарплата (по salary_from)."""
+
         self.cur.execute("""
             SELECT AVG(salary_from)
             FROM vacancies
@@ -45,6 +51,7 @@ class DBManager:
 
     def get_vacancies_with_higher_salary(self) -> list[tuple]:
         """Вакансии с зарплатой выше средней (по salary_from)."""
+
         avg_salary = self.get_avg_salary()
         self.cur.execute("""
             SELECT title, salary_from, url
@@ -55,6 +62,7 @@ class DBManager:
 
     def get_vacancies_with_keyword(self, keyword: str) -> list[tuple]:
         """Вакансии, в названии которых есть ключевое слово."""
+
         pattern = f"%{keyword.lower()}%"
         self.cur.execute("""
             SELECT title, url

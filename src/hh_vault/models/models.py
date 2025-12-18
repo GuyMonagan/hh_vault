@@ -2,10 +2,20 @@ from typing import Optional
 
 
 class Company:
+    """
+    Представляет компанию с hh.ru.
+
+    :param hh_id: ID компании на hh.ru
+    :param name: Название компании
+    :param url: Ссылка на страницу компании
+    """
+
+
     def __init__(self, hh_id: int, name: str, url: str):
         self.hh_id = hh_id
         self.name = name
         self.url = url
+
 
     def __repr__(self):
         return f"<Company {self.name} ({self.hh_id})>"
@@ -13,6 +23,13 @@ class Company:
 
     @classmethod
     def from_api(cls, data: dict) -> "Company":
+        """
+        Создает объект Company на основе данных, полученных с API hh.ru.
+
+        :param data: Словарь с данными компании
+        :return: Объект Company
+        """
+
         return cls(
             hh_id=int(data["id"]),
             name=data["name"],
@@ -21,6 +38,18 @@ class Company:
 
 
 class Vacancy:
+    """
+    Представляет вакансию с hh.ru.
+
+    :param hh_id: ID вакансии
+    :param title: Название должности
+    :param url: Ссылка на вакансию
+    :param salary_from: Нижняя граница зарплаты
+    :param salary_to: Верхняя граница зарплаты
+    :param currency: Валюта зарплаты
+    :param employer_id: ID работодателя
+    """
+
     def __init__(
         self,
         hh_id: int,
@@ -39,12 +68,20 @@ class Vacancy:
         self.currency = currency
         self.employer_id = employer_id
 
+
     def __repr__(self):
         return f"<Vacancy {self.title} ({self.hh_id})>"
 
 
     @classmethod
     def from_api(cls, data: dict) -> "Vacancy":
+        """
+        Создает объект Vacancy на основе данных, полученных с API hh.ru.
+
+        :param data: Словарь с данными вакансии
+        :return: Объект Vacancy
+        """
+
         salary = data.get("salary") or {}
 
         return cls(

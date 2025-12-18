@@ -5,6 +5,14 @@ from hh_vault.database.db import get_connection
 
 
 def insert_companies(companies: list[Company]):
+    """
+    Вставляет список компаний в таблицу companies.
+
+    Если компания с таким hh_id уже существует, она пропускается.
+
+    :param companies: Список объектов Company
+    """
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -21,6 +29,14 @@ def insert_companies(companies: list[Company]):
 
 
 def insert_vacancies(vacancies: list[Vacancy]):
+    """
+    Вставляет список вакансий в таблицу vacancies.
+
+    Если вакансия с таким hh_id уже существует, она пропускается.
+
+    :param vacancies: Список объектов Vacancy
+    """
+
     conn = get_connection()
     cur = conn.cursor()
 
@@ -47,6 +63,16 @@ def insert_vacancies(vacancies: list[Vacancy]):
 
 
 def run_etl():
+    """
+    Выполняет ETL-процесс:
+
+    - Получает данные по списку компаний.
+    - Преобразует их в объекты Company и Vacancy.
+    - Загружает данные в PostgreSQL.
+
+    По завершении выводит количество загруженных записей.
+    """
+
     api = HeadHunterAPI()
     raw_data = api.get_all_data(COMPANY_IDS)
 

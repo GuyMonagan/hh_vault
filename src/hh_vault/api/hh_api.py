@@ -5,6 +5,7 @@ from hh_vault.models.models import Company
 from hh_vault.models.models import Vacancy
 from hh_vault.config.settings import COMPANY_IDS, HH_API_URL
 
+
 class HeadHunterAPI:
     BASE_URL = "https://api.hh.ru"
 
